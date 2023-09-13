@@ -1,0 +1,46 @@
+# 기본적인 Workflow의 구성을 연습해보자.
+
+# Workflow의 이름을 정할 수 있다.
+name: Donshin Actions
+
+# Workflow가 언제 실행될지 트리거를 정해준다.
+on:
+  # main 브랜치에 push나 PR이 발생했을 때, 이 Workflow가 실행된다.
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  
+  # Actions 탭에서 수동으로 Workflow를 실행할 수 있다. - 지금은 트리거 없이 Actions 실행 테스트를 보기 위해서 넣었음
+  workflow_dispatch:
+
+# Workflow에서 실행해야 할 작업 목록. 순차적으로 실행할 수도, 병렬적으로 실행할 수도 있다.
+jobs:
+  # 해야할 작업의 이름을 적어주면 된다. 다른 작업과 구분할 수 있도록
+  checkout:
+    # 이 작업이 어느 환경에서 실행될지 정하기. runner의 종류를 정하는거다.
+    # 현재로썬 ubuntu-latest는 22.04 버전을 의미한다. ubuntu-18.04 <- 이런식으로 버전 정해주기도 가능
+    runs-on: ubuntu-latest
+
+    # 이 작업에서 해야 할 목록을 순차적으로 실행힌다. - 체크아웃도 안했는데 빌드를 할 순 없으니깐
+    steps:
+      # checkout 이후의 runner 상태와 비교하기 위해 먼저 실행
+      - run: ls -al
+      
+      # 우선은 이 job이 실행되는 ubuntu-latest 환경의 워크 쉘에서 우리의 코드 저장소에서 코드를 가져와야한다.
+      # $GITHUB_WORKSPACE에 우리의 저장소를 가져와서 작업에서 접근할 수 있도록 한다.
+      # actions/checkout을 쓰면 편리한데,
+      # git init
+      # git config
+      # git fetch
+      # git checkout
+      # git log
+      # 순으로 실행된다. actions/checkout을 쓰기 싫다면 일일이 다 해주면 된다. ㅎ
+      - uses: actions/checkout@v3
+
+      # checkout 이후의 runner 상태
+      - run: ls -al
+
+      # 코드가 잘 들어왔는지 확인해보자. checkout했으니까 이 yml 파일도 있을거 아니여~
+      - run: cat .github/workflows/practice.yml
