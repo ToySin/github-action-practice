@@ -38,6 +38,10 @@ jobs:
       # git log
       # 순으로 실행된다. actions/checkout을 쓰기 싫다면 일일이 다 해주면 된다. ㅎ
       - uses: actions/checkout@v3
+        # 저장소 코드를 내려받을 경로도 지정할 수 있다.
+        # 참고로 마지막 최근 커밋만 가져온다. 전부다 가져오면 리소스 낭비니까! 물론 설정가능~
+        # with:
+          # path: source-code
 
       # checkout 이후의 runner 상태
       - run: ls -al
