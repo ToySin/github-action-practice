@@ -1,0 +1,10 @@
+name: Setup-Java
+on: push
+jobs:
+  setup-java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+      - run: java --version
